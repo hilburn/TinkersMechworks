@@ -17,7 +17,7 @@
 	<property name="mcpsrc.dir" value="${mcp.dir}/src"/>
 
 	<property name="mc.version" value="1.6.4"/>
-	<property name="forge.version" value="9.11.0.880"/>
+	<property name="forge.version" value="9.11.1.953"/>
 
     <property name="version.major" value="0"/>
     <property name="version.minor" value="0"/>
@@ -28,8 +28,8 @@
 	<available file=".git" type="dir" property="git.present"/>
 
 	<property name="build.dependencies.file" value="${build.dir}/dependencies.properties" />
-	<property name="tcon.version" value="11697b6" />
-	<property name="tcon.name" value="TConstruct-${mc.version}-DEV.${tcon.version}-Deobf.jar" />
+	<property name="tcon.version" value="542" />
+	<property name="tcon.name" value="TConstruct-${mc.version}-${tcon.version}-Deobf.jar" />
 	<available property="tcon-downloaded" file="${download.dir}/${tcon.name}" />
 	<condition property="tcon-installed">
 		<and>
@@ -50,7 +50,7 @@
 	<mkdir dir="${download.dir}"/>
 
 	<target name="download-tcon" unless="tcon-downloaded">
-		<get src="http://tanis.sunstrike.io/TConstruct/deobf/${tcon.name}" dest="${download.dir}" usetimestamp="true" />
+		<get src="https://dl.dropboxusercontent.com/u/10600322/${tcon.name}" dest="${download.dir}" usetimestamp="true" />
 	</target>
 
 	<target name="install-tcon" depends="setup,download-tcon" unless="tcon-installed">
