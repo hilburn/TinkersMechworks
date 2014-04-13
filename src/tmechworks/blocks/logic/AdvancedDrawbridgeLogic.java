@@ -57,12 +57,21 @@ public class AdvancedDrawbridgeLogic extends InventoryLogic implements IFacingLo
         this.worldObj = par1World;
     }
 
-    @Override
-    public void invalidate ()
+    // Super awesome hack of post initialization hashmap-adding nonsense! 
+    // Completely necessary due to the way players load chunks, including fake ones.
+    private void initFakePlayer ()
     {
-        this.tileEntityInvalid = true;
-        fakePlayer = null;
+        if (fakePlayer == null && !isInvalid())
+            fakePlayer = new FakePlayerLogic("Player.Drawbridge", this);
     }
+
+    //This gets called too early. Adding the fake player here creates multiple copies of the TileEntity and causes havoc!
+    /*@Override
+    public void validate ()
+    {
+        this.tileEntityInvalid = false;
+        fakePlayer = new FakePlayerLogic("Player.Drawbridge", this);
+    }*/
 
     @Override
     public void validate ()
@@ -148,6 +157,7 @@ public class AdvancedDrawbridgeLogic extends InventoryLogic implements IFacingLo
     {
         if (!worldObj.isRemote)
         {
+            initFakePlayer(); //D:<
             if (keycode == 4)
             {
                 fakePlayer.rotationYaw = 0;
@@ -329,6 +339,7 @@ public class AdvancedDrawbridgeLogic extends InventoryLogic implements IFacingLo
                         if (block == null || block.isAirBlock(worldObj, xPos, yPos, zPos) || block.isBlockReplaceable(worldObj, xPos, yPos, zPos))
                         {
                             // tryExtend(worldObj, xPos, yPos, zPos, direction);
+                            initFakePlayer(); //D:<
                             int blockToItem = getStackInBufferSlot(extension - 1) != null ? TConstructRegistry.blockToItemMapping[getStackInBufferSlot(extension - 1).itemID] : 0;
                             if (blockToItem == 0)
                             {

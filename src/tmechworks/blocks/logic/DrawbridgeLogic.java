@@ -54,13 +54,22 @@ public class DrawbridgeLogic extends InventoryLogic implements IFacingLogic, IAc
         fakePlayer = null;
     }
 
-    @Override
+    // Super awesome hack of post initialization hashmap-adding nonsense! 
+    // Completely necessary due to the way players load chunks, including fake ones.
+    private void initFakePlayer ()
+    {
+        if (fakePlayer == null && !isInvalid())
+            fakePlayer = new FakePlayerLogic("Player.Drawbridge", this);
+    }
+
+    //This gets called too early. Adding the fake player here creates multiple copies of the TileEntity and causes havoc!
+    /*@Override
     public void validate ()
     {
         this.tileEntityInvalid = false;
         fakePlayer = new FakePlayerLogic("Player.Drawbridge", this);
-    }
-    
+    }*/
+
     @Override
     public boolean getActive ()
     {
@@ -146,6 +155,7 @@ public class DrawbridgeLogic extends InventoryLogic implements IFacingLogic, IAc
     {
         if (!worldObj.isRemote)
         {
+            initFakePlayer(); //D:<
             if (keycode == 4)
             {
                 fakePlayer.rotationYaw = 0;
@@ -311,6 +321,7 @@ public class DrawbridgeLogic extends InventoryLogic implements IFacingLogic, IAc
                         if (block == null || block.isAirBlock(worldObj, xPos, yPos, zPos) || block.isBlockReplaceable(worldObj, xPos, yPos, zPos))
                         {
                             //tryExtend(worldObj, xPos, yPos, zPos, direction);
+                            initFakePlayer(); //D:<
                             int blockToItem = TConstructRegistry.blockToItemMapping[bufferStack.itemID];
                             if (blockToItem == 0)
                             {
@@ -329,10 +340,10 @@ public class DrawbridgeLogic extends InventoryLogic implements IFacingLogic, IAc
                             List pushedObjects = new ArrayList();
                             Block b1 = Block.blocksList[bufferStack.itemID];
                             AxisAlignedBB axisalignedbb;
-                            if(b1!= null)
-                            axisalignedbb = b1.getCollisionBoundingBoxFromPool(worldObj, xPos, yPos, zPos);
+                            if (b1 != null)
+                                axisalignedbb = b1.getCollisionBoundingBoxFromPool(worldObj, xPos, yPos, zPos);
                             else
-                            axisalignedbb = Block.blocksList[1].getCollisionBoundingBoxFromPool(worldObj, xPos, yPos, zPos);
+                                axisalignedbb = Block.blocksList[1].getCollisionBoundingBoxFromPool(worldObj, xPos, yPos, zPos);
                             if (axisalignedbb != null)
                             {
                                 List list = worldObj.getEntitiesWithinAABBExcludingEntity((Entity) null, axisalignedbb);
