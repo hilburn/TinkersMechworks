@@ -10,18 +10,14 @@ public class FakePlayerLogic extends FakePlayer
 {
     ChunkCoordinates logicPos;
 
-    public FakePlayerLogic(World world, String name)
+    public FakePlayerLogic(String name, TileEntity te)
     {
-        super(world, name);
+        super(te.worldObj, name);
+        logicPos = new ChunkCoordinates(te.xCoord, te.yCoord, te.zCoord);
     }
 
     public ChunkCoordinates getPlayerCoordinates ()
     {
         return logicPos;
-    }
-
-    public void init (TileEntity te)
-    {
-        logicPos = new ChunkCoordinates(te.xCoord, te.yCoord, te.zCoord);
     }
 }

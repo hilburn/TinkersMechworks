@@ -55,8 +55,6 @@ public class AdvancedDrawbridgeLogic extends InventoryLogic implements IFacingLo
     public void setWorldObj (World par1World)
     {
         this.worldObj = par1World;
-        if (!par1World.isRemote)
-            fakePlayer = new FakePlayerLogic(worldObj, "Player.Drawbridge");
     }
 
     @Override
@@ -70,7 +68,7 @@ public class AdvancedDrawbridgeLogic extends InventoryLogic implements IFacingLo
     public void validate ()
     {
         this.tileEntityInvalid = false;
-        fakePlayer.init(this);
+        fakePlayer = new FakePlayerLogic("Player.Drawbridge", this);
     }
 
     @Override
@@ -290,7 +288,7 @@ public class AdvancedDrawbridgeLogic extends InventoryLogic implements IFacingLo
 
     public void updateEntity ()
     {
-        if (working)
+        if (working && !isInvalid())
         {
             ticks++;
             if (ticks == 5)
