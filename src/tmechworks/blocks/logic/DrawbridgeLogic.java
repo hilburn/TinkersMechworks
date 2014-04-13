@@ -52,9 +52,23 @@ public class DrawbridgeLogic extends InventoryLogic implements IFacingLogic, IAc
     {
         this.worldObj = par1World;
         if (!worldObj.isRemote)
-            fakePlayer = new FakePlayerLogic(worldObj, "Player.Drawbridge", this);
+            fakePlayer = new FakePlayerLogic(worldObj, "Player.Drawbridge");
     }
 
+    @Override
+    public void invalidate ()
+    {
+        this.tileEntityInvalid = true;
+        fakePlayer = null;
+    }
+
+    @Override
+    public void validate ()
+    {
+        this.tileEntityInvalid = false;
+        fakePlayer.init(this);
+    }
+    
     @Override
     public boolean getActive ()
     {
