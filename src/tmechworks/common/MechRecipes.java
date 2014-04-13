@@ -29,8 +29,8 @@ public class MechRecipes
                 MechContent.proxyItem_blankPattern, 1, 1), 'r', new ItemStack(Item.redstone), 'd', new ItemStack(MechContent.redstoneMachine, 1, 0)));
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(MechContent.redstoneMachine, 1, 2), " c ", "rdr", " a ", 'a', "ingotAluminumBrass", 'c', new ItemStack(
                 MechContent.proxyItem_blankPattern, 1, 2), 'r', new ItemStack(Item.redstone), 'd', new ItemStack(MechContent.redstoneMachine, 1, 0)));
-        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(MechContent.redstoneMachine, 1, 3), "blockCobalt", "blockArdite", new ItemStack(Block.blockRedstone), new ItemStack(
-                MechContent.redstoneMachine, 1, 0)));
+        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(MechContent.redstoneMachine, 1, 3), "ingotCobalt", "ingotCobalt", "ingotCobalt", "ingotArdite", "ingotArdite", "ingotArdite",
+                new ItemStack(Block.blockRedstone), new ItemStack(MechContent.redstoneMachine, 1, 0)));
 
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(MechContent.signalBus.blockID, 1, 0), "www", "sss", 'w', MechContent.lengthWire, 's', new ItemStack(Block.stoneSingleSlab, 1,
                 OreDictionary.WILDCARD_VALUE)));
@@ -40,19 +40,20 @@ public class MechRecipes
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(MechContent.lengthWire, 8), "a", "a", "a", 'a', "ingotAluminumBrass"));
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(MechContent.spoolWire, 1, 256 - 8), "www", "wrw", "www", 'w', MechContent.lengthWire, 'r', "stoneRod"));
         GameRegistry.addRecipe(new SpoolRepairRecipe(new ItemStack(MechContent.spoolWire, 1, 256), new ItemStack(MechContent.lengthWire, 1)));
-        
+
         //Filter frame recipes 
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(MechContent.filter, 1, 0), "xxx", "x x", "xxx", 'x', "stickWood"));
         //Auto-populate crafting recipes for mesh filters.
-        for(int i = 0; i < 8; i ++)
+        for (int i = 0; i < 8; i++)
         {
-        	if(MechContent.filter.subFilters[i] != null) {
-            	if(MechContent.filter.subFilters[i].getAssociatedItem() != null) {
-            		//Crafting
-                    GameRegistry.addShapelessRecipe(new ItemStack(MechContent.filter, 1, i),
-                    		new ItemStack(MechContent.filter, 1, 0), MechContent.filter.subFilters[i].getAssociatedItem().copy());
-            	}
-        	}
+            if (MechContent.filter.subFilters[i] != null)
+            {
+                if (MechContent.filter.subFilters[i].getAssociatedItem() != null)
+                {
+                    //Crafting
+                    GameRegistry.addShapelessRecipe(new ItemStack(MechContent.filter, 1, i), new ItemStack(MechContent.filter, 1, 0), MechContent.filter.subFilters[i].getAssociatedItem().copy());
+                }
+            }
         }
 
     }
