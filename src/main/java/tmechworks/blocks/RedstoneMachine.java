@@ -331,7 +331,6 @@ public class RedstoneMachine extends InventoryBlock
         }
         else
         {
-
             return i1.isProvidingWeakPower(world, x, y, z, side);
         }
     }
